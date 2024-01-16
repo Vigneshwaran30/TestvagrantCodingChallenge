@@ -23,7 +23,7 @@ class Product:
         return int(self.price)
     
 #Creating Objects
-object1 = Product("LeatherWallet",110,18,1)
+object1 = Product("LeatherWallet",1100,18,1)
 object2 = Product("Umbrella",900,12,4)
 object3 = Product("Cigarette",200,28,3)
 object4 = Product("Honey",100,0,2)
@@ -31,23 +31,29 @@ object4 = Product("Honey",100,0,2)
 #create basket with differnet products
 basket=[object1,object2,object3,object4]
 
-#initialize maxgst to object1
-maxgst=basket[0].gst()
-
-#Initialize Maximum product name to object1
+#Initialize maxgst and the maxproduct name to first object
+maxgst=(basket[0].gst()/100)*basket[0].unitprice()
 maxproductname=basket[0].returnname()
 
-#Finding Max Gst among the products
-for i in basket:
-    if i.gst()>maxgst:
-        maxgst=i.gst()
-        maxproductname=i.returnname()
+#travesrsing through array and finding the answer
+for i in range(len(basket)):
+    if (basket[i].gst()/100)*basket[i].unitprice() > maxgst:
+        maxgst=(basket[i].gst()/100)*basket[i].unitprice()
+        maxproductname=basket[i].returname()
+
 print("The Product with maximum Gst is : " + maxproductname) 
-print("The Maximum GST is : " + str(maxgst))
 
 #Calculate the amount to be paid to the Shop Keeper
-TotalPrice=0
+maxprice=0
 for i in basket:
-    # if i.unitprice()>500:
-    TotalPrice=TotalPrice+((i.unitprice()*(i.gst()+100)*i.getquantuity())/10)
-print(TotalPrice)
+    if i.gst()==0:
+        perunit=i.unitprice()
+    else:
+        perunit=i.unitprice()+(i.unitprice()*(i.gst()/100))
+    
+    if perunit>500:
+        perunit=perunit*(95/100)
+
+    maxprice=maxprice+(perunit*i.getquantuity())
+
+print(maxprice)
